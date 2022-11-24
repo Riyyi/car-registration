@@ -7,11 +7,6 @@ namespace CarRegistration.Controllers;
 [Produces("application/json")]
 public class CarManufacturerController : ControllerBase
 {
-    private static readonly string[] Brands = new[]
-    {
-        "VW", "Audi", "Skoda", "Mercedes-Benz"
-    };
-
     private CarManufacturerContext _context;
     private readonly ILogger<CarManufacturerController> _logger;
 
@@ -21,20 +16,10 @@ public class CarManufacturerController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet]
-    public IEnumerable<CarManufacturer> Get()
-    {
-        return Enumerable.Range(1, 5).Select(index => new CarManufacturer
-        {
-            Name = "",
-            Brand = Brands[Random.Shared.Next(Brands.Length)],
-            Address = "",
-            PhoneNumber = "",
-            FoundingYear = 1970
-        })
-        .ToArray();
-    }
+    // CRUD
+    // ------------------------------------
 
+    // Create
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Create(CarManufacturer manufacturer)
@@ -42,12 +27,32 @@ public class CarManufacturerController : ControllerBase
         _context.Add(manufacturer);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(Get), new { id = manufacturer.CarManufacturerId }, manufacturer);
+        return CreatedAtAction(nameof(Read), new { id = manufacturer.CarManufacturerId }, manufacturer);
     }
 
-    // [HttpGet(Name = "{id}")]
-    // public void Read()
+    // Read
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public IEnumerable<CarManufacturer> Read()
+    {
+        return _context.CarManufacturers.ToList();
+    }
 
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Read(int id)
+    {
+        var manufacturer = await _context.CarManufacturers.FindAsync(id);
+
+        if (manufacturer is null) {
+            return NotFound();
+        }
+
+        return Ok(manufacturer);
+    }
+
+    // Update
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Update(int id, [FromBody] CarManufacturer manufacturer)
@@ -56,9 +61,10 @@ public class CarManufacturerController : ControllerBase
         _context.Update(manufacturer);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(Get), new { id = manufacturer.CarManufacturerId }, manufacturer);
+        return CreatedAtAction(nameof(Read), new { id = manufacturer.CarManufacturerId }, manufacturer);
     }
 
+    // Delete
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
