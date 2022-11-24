@@ -51,6 +51,20 @@ public class CarManufacturerController : ControllerBase
     // [HttpPut(Name = "{id}")]
     // public void Update()
 
-    // [HttpDelete(Name = "{id}")]
-    // public void Delete()
+    [HttpDelete(Name = "{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var manufacturer = await _context.CarManufacturers.FindAsync(id);
+
+        if (manufacturer is null) {
+            return NotFound();
+        }
+
+        _context.CarManufacturers.Remove(manufacturer);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }
