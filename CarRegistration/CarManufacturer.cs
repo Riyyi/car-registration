@@ -4,6 +4,8 @@ namespace CarRegistration;
 
 public class CarManufacturer
 {
+    public int CarManufacturerId { get; set; }
+
     [Required]
     public string Name { get; set; } = null!;
 
