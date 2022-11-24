@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CarRegistration.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]/[action]")]
 [Produces("application/json")]
 public class CarManufacturerController : ControllerBase
 {
@@ -12,10 +12,12 @@ public class CarManufacturerController : ControllerBase
         "VW", "Audi", "Skoda", "Mercedes-Benz"
     };
 
+    private CarManufacturerContext _context;
     private readonly ILogger<CarManufacturerController> _logger;
 
     public CarManufacturerController(ILogger<CarManufacturerController> logger)
     {
+        _context = new CarManufacturerContext();
         _logger = logger;
     }
 
@@ -32,4 +34,23 @@ public class CarManufacturerController : ControllerBase
         })
         .ToArray();
     }
+
+    [HttpPost(Name = "CreateCarManufacturer")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<IActionResult> Create(CarManufacturer manufacturer)
+    {
+        _context.Add(manufacturer);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(Get), new { id = manufacturer.CarManufacturerId }, manufacturer);
+    }
+
+    // [HttpGet(Name = "{id}")]
+    // public void Read()
+
+    // [HttpPut(Name = "{id}")]
+    // public void Update()
+
+    // [HttpDelete(Name = "{id}")]
+    // public void Delete()
 }
