@@ -4,6 +4,7 @@ namespace CarRegistration.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Produces("application/json")]
 public class CarManufacturerController : ControllerBase
 {
     private static readonly string[] Brands = new[]
