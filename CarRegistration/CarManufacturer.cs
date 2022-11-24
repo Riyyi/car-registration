@@ -1,14 +1,20 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace CarRegistration;
 
 public class CarManufacturer
 {
-    public string? Name { get; set; }
+    [Required]
+    public string Name { get; set; } = null!;
 
-    public string? Brand { get; set; }
+    [Required]
+    public string Brand { get; set; } = null!;
 
-    public string? Address { get; set; }
+    [Required]
+    public string Address { get; set; } = null!;
 
-    public string? PhoneNumber { get; set; }
+    [Required]
+    public string PhoneNumber { get; set; } = null!;
 
     public int FoundingYear { get; set; }
 }
