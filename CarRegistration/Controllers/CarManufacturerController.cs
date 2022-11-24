@@ -21,7 +21,7 @@ public class CarManufacturerController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet(Name = "GetCarManufacturer")]
+    [HttpGet]
     public IEnumerable<CarManufacturer> Get()
     {
         return Enumerable.Range(1, 5).Select(index => new CarManufacturer
@@ -35,7 +35,7 @@ public class CarManufacturerController : ControllerBase
         .ToArray();
     }
 
-    [HttpPost(Name = "CreateCarManufacturer")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Create(CarManufacturer manufacturer)
     {
@@ -48,10 +48,18 @@ public class CarManufacturerController : ControllerBase
     // [HttpGet(Name = "{id}")]
     // public void Read()
 
-    // [HttpPut(Name = "{id}")]
-    // public void Update()
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<IActionResult> Update(int id, [FromBody] CarManufacturer manufacturer)
+    {
+        manufacturer.CarManufacturerId = id;
+        _context.Update(manufacturer);
+        await _context.SaveChangesAsync();
 
-    [HttpDelete(Name = "{id}")]
+        return CreatedAtAction(nameof(Get), new { id = manufacturer.CarManufacturerId }, manufacturer);
+    }
+
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
