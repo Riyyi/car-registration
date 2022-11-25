@@ -11,6 +11,5 @@ public class Brand
 
     public long CarManufacturerId { get; set; }
 
-    [Required]
-    public CarManufacturer CarManufacturer { get; set; } = null!;
+    public CarManufacturer? CarManufacturer { get; set; }
 }

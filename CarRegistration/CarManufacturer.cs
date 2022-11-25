@@ -9,8 +9,7 @@ public class CarManufacturer
     [Required]
     public string Name { get; set; } = null!;
 
-    [Required]
-    public ICollection<Brand> Brand { get; set; } = null!;
+    public ICollection<Brand>? Brand { get; set; }
 
     [Required]
     public string Address { get; set; } = null!;
