@@ -4,6 +4,7 @@ namespace CarRegistration;
 
 public class CarRegistrationContext : DbContext
 {
+    public DbSet<Brand> Brands { get; set; } = null!;
     public DbSet<CarManufacturer> CarManufacturers { get; set; } = null!;
 
     public string DbPath { get; }

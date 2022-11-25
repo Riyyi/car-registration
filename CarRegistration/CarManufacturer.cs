@@ -10,7 +10,7 @@ public class CarManufacturer
     public string Name { get; set; } = null!;
 
     [Required]
-    public string Brand { get; set; } = null!;
+    public ICollection<Brand> Brand { get; set; } = null!;
 
     [Required]
     public string Address { get; set; } = null!;
