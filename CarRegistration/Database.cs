@@ -2,17 +2,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRegistration;
 
-public class CarManufacturerContext : DbContext
+public class CarRegistrationContext : DbContext
 {
     public DbSet<CarManufacturer> CarManufacturers { get; set; } = null!;
 
     public string DbPath { get; }
 
-    public CarManufacturerContext()
+    public CarRegistrationContext()
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
-        DbPath = System.IO.Path.Join(path, "car-manufacturers.db");
+        DbPath = System.IO.Path.Join(path, "car-registration.db");
     }
 
     // The following configures EF to create a Sqlite database file in the

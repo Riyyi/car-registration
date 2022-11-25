@@ -7,12 +7,12 @@ namespace CarRegistration.Controllers;
 [Produces("application/json")]
 public class CarManufacturerController : ControllerBase
 {
-    private CarManufacturerContext _context;
+    private CarRegistrationContext _context;
     private readonly ILogger<CarManufacturerController> _logger;
 
     public CarManufacturerController(ILogger<CarManufacturerController> logger)
     {
-        _context = new CarManufacturerContext();
+        _context = new CarRegistrationContext();
         _logger = logger;
     }
 
