@@ -35,7 +35,7 @@ public class CarManufacturerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IEnumerable<CarManufacturer> Read()
     {
-        return _context.CarManufacturers.ToList();
+        return _context.CarManufacturers.ToList().Select(manufacturer => FillManufacturer(manufacturer));
     }
 
     [HttpGet("{id}")]
@@ -48,6 +48,8 @@ public class CarManufacturerController : ControllerBase
         if (manufacturer is null) {
             return NotFound();
         }
+
+        manufacturer = FillManufacturer(manufacturer);
 
         return Ok(manufacturer);
     }
@@ -80,5 +82,22 @@ public class CarManufacturerController : ControllerBase
         await _context.SaveChangesAsync();
 
         return NoContent();
+    }
+
+    // ------------------------------------
+
+    private CarManufacturer FillManufacturer(CarManufacturer manufacturer)
+    {
+        var brands = _context.Brands.ToList().FindAll(e => e.CarManufacturerId == manufacturer.Id);
+
+        if (brands.Count > 0) {
+            manufacturer.Brand = brands;
+
+            foreach (Brand brand in manufacturer.Brand) {
+                brand.CarManufacturer = null;
+            }
+        }
+
+        return manufacturer;
     }
 }

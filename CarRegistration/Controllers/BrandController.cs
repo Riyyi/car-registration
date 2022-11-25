@@ -35,7 +35,7 @@ public class BrandController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IEnumerable<Brand> Read()
     {
-        return _context.Brands.ToList();
+        return _context.Brands.ToList().Select(brand => brand = FillBrand(brand));
     }
 
     [HttpGet("{id}")]
@@ -48,6 +48,8 @@ public class BrandController : ControllerBase
         if (brand is null) {
             return NotFound();
         }
+
+        brand = FillBrand(brand);
 
         return Ok(brand);
     }
@@ -80,5 +82,19 @@ public class BrandController : ControllerBase
         await _context.SaveChangesAsync();
 
         return NoContent();
+    }
+
+    // ------------------------------------
+
+    private Brand FillBrand(Brand brand)
+    {
+        var manufacturer = _context.CarManufacturers.Find(brand.CarManufacturerId);
+
+        if (manufacturer is not null) {
+            brand.CarManufacturer = manufacturer;
+            brand.CarManufacturer.Brand = null;
+        }
+
+        return brand;
     }
 }
