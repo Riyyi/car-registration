@@ -6,6 +6,8 @@ public class Car
 {
     public long Id { get; set; }
 
+    public long MakeId { get; set; }
+
     [Required]
     public Brand Make { get; set; } = null!;
 

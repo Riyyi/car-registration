@@ -9,6 +9,8 @@ public class Brand
     [Required]
     public string Name { get; set; } = null!;
 
+    public long CarManufacturerId { get; set; }
+
     [Required]
     public CarManufacturer CarManufacturer { get; set; } = null!;
 }
