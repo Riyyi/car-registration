@@ -8,7 +8,9 @@
 ## Setup
 
 ```sh
-#..
+$ cd CarRegistration
+$ dotnet ef database update
+$ dotnet run
 ```
 
 ## References
