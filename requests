@@ -1,0 +1,35 @@
+# -*- restclient -*-
+
+# C-c C-v | restclient-http-send-current-stay-in-window
+
+# ------------------------------------------
+
+POST https://localhost:7020/api/CarManufacturer/Create
+Content-Type: application/json
+{
+	"name": "My big manufacturer",
+	"address": "Somewhere, you will never find me",
+	"phoneNumber": "000",
+	"foundingYear": 1992
+}
+
+# ------------------------------------------
+
+GET https://localhost:7020/api/CarManufacturer/Read
+
+GET https://localhost:7020/api/CarManufacturer/Read/2
+
+# ------------------------------------------
+
+PUT https://localhost:7020/api/CarManufacturer/Update/2
+Content-Type: application/json
+{
+	"name": "My even bigger manufacturer",
+	"address": "From out of this world",
+	"phoneNumber": "111",
+	"foundingYear": 2103
+}
+
+# ------------------------------------------
+
+DELETE https://localhost:7020/api/CarManufacturer/Delete/2
