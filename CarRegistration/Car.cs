@@ -26,7 +26,7 @@ public class Car
 
     [Required]
     public string BodyType { get; set; } = null!;
-    
+
     [Required]
     public string Color { get; set; } = null!;
 }
